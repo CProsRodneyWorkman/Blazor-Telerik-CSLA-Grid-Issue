@@ -104,11 +104,9 @@ namespace BusinessLibrary
     }
 
     [Fetch,FetchChild]
-    private void Fetch(int artistId)
+    private void Fetch(Art_Studio_DataModel.Artist artist)
     {
       // Use ArtistFaker to generate a fake artist
-      var faker = new ArtistFaker();
-      var artist = faker.GenerateArtists(1).First();
       ArtistId = artist.ArtistId;
       FullName = artist.FullName;
       ContactEmail = artist.ContactEmail;
