@@ -1,0 +1,76 @@
+﻿@page "/nativeblazor"
+
+@using BusinessLibrary
+@inject IServiceProvider ServiceProvider
+@inject Csla.Blazor.State.StateManager StateManager
+@inject IDataPortal<ArtStudioEdit> artStudioEditPortal
+@inject ViewModel<ArtStudioEdit> artStudioEditModel
+@inject NavigationManager NavigationManager
+@using Csla
+@using Csla.Blazor
+
+<h1>Native Blazor Grid Demo</h1>
+
+@if (artStudioEditModel?.Model != null)
+{
+    <EditForm Model="artStudioEditModel.Model">
+        <div class="mb-3">
+            <label>Studio ID</label>
+            <InputNumber @bind-Value="artStudioEditModel.Model.StudioId" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Name</label>
+            <InputText @bind-Value="artStudioEditModel.Model.Name" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Location</label>
+            <InputText @bind-Value="artStudioEditModel.Model.Location" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Capacity</label>
+            <InputNumber @bind-Value="artStudioEditModel.Model.Capacity" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>Equipment</label>
+            <InputText @bind-Value="artStudioEditModel.Model.Equipment" class="form-control" />
+        </div>
+        <!-- ArtistList is not shown as an edit field here -->
+    </EditForm>
+}
+else if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <p>@ErrorMessage</p>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+
+    private string ErrorMessage { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Every page _must_ initialize the state manager
+        await StateManager.InitializeAsync();
+
+        artStudioEditModel.Saved += () => NavigationManager.NavigateTo("projects");
+        artStudioEditModel.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
+
+        await artStudioEditModel.RefreshAsync(() => artStudioEditPortal.FetchAsync()).ContinueWith(_ =>
+        {
+            if (artStudioEditModel.Exception != null)
+            {
+                ErrorMessage = artStudioEditModel.ViewModelErrorText;
+            }
+            else
+            {
+                ErrorMessage = string.Empty;
+            }
+            // Handle any post-refresh logic here
+            InvokeAsync(() => StateHasChanged());
+        });
+
+    }
+}

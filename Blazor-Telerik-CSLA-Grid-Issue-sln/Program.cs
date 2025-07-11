@@ -1,10 +1,20 @@
 using Blazor_Telerik_CSLA_Grid_Issue.Components;
+using Csla;
+using Csla.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// CSLA requires AddHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
+// Add CSLA
+builder.Services.AddCsla(o => o
+  .AddAspNetCore()
+  .AddServerSideBlazor(o => o.UseInMemoryApplicationContextManager = false));
 
 var app = builder.Build();
 

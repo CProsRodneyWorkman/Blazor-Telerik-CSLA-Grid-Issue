@@ -66,16 +66,17 @@ namespace BusinessLibrary
       // Add more business rules as needed
     }
 
+
     [Fetch]
-    private void Fetch(int studioId, [Inject] IChildDataPortal<ArtistList> artistListPortal)
+    private void Fetch([Inject] IChildDataPortal<ArtistList> artistListPortal)
     {
       // Simulate fetching from a data source
-      StudioId = studioId;
+      StudioId = 1;
       Name = "Sample Studio";
       Location = "Room 101";
       Capacity = 10;
       Equipment = "Kilns, Easels, Pottery Wheels";
-      ArtistList = artistListPortal.FetchChild(studioId);
+      //ArtistList = artistListPortal.FetchChild(StudioId);
       BusinessRules.CheckRules();
     }
 

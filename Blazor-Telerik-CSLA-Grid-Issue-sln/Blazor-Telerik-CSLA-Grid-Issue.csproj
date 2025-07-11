@@ -8,4 +8,13 @@
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Csla.AspNetCore" Version="9.1.0" />
+    <PackageReference Include="Csla.Blazor" Version="9.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorTelerikCslaGridIssue.BusinessLibrary\BusinessLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
