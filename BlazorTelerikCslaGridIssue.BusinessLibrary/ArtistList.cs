@@ -35,7 +35,7 @@ namespace BusinessLibrary
         }
 
         [FetchChild]
-        private void Fetch([Inject] IChildDataPortal<ArtistEdit> portal, int studioId)
+        private void Fetch([Inject] IChildDataPortal<ArtistEdit> artistEditPortal, int studioId)
         {
             // Simulate fetch for studio
             using (LoadListMode)
@@ -47,7 +47,7 @@ namespace BusinessLibrary
                 var artists = faker.GenerateArtists(desiredArtistCount);
                 foreach (var artist in artists)
                 {
-                    Add(portal.FetchChild(artist.ArtistId));
+                    Add(artistEditPortal.FetchChild(artist));
                 }
             }
         }
