@@ -5,7 +5,11 @@ VisualStudioVersion = 17.14.36212.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor-Telerik-CSLA-Grid-Issue", "Blazor-Telerik-CSLA-Grid-Issue.csproj", "{0086017D-85C7-430A-ADF0-0FA10EB4D3F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorTelerikCslaGridIssue.BusinessLibrary", "..\BlazorTelerikCslaGridIssue.BusinessLibrary\BlazorTelerikCslaGridIssue.BusinessLibrary.csproj", "{FA11B68A-ECD5-BBB6-1167-A2A56C4D17C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLibrary", "..\BlazorTelerikCslaGridIssue.BusinessLibrary\BusinessLibrary.csproj", "{FA11B68A-ECD5-BBB6-1167-A2A56C4D17C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art-Studio-FakeData", "..\BlazorTelerikCslaGridIssue.FakeData\Art-Studio-FakeData.csproj", "{C5D7E8A7-0B75-CCAA-A212-54F60CD0DA23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art-Studio-DataModel", "..\Art-Studio-DataModel\Art-Studio-DataModel.csproj", "{345939CA-8A01-4D24-9605-DAA0A54E7E8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{FA11B68A-ECD5-BBB6-1167-A2A56C4D17C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA11B68A-ECD5-BBB6-1167-A2A56C4D17C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA11B68A-ECD5-BBB6-1167-A2A56C4D17C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5D7E8A7-0B75-CCAA-A212-54F60CD0DA23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D7E8A7-0B75-CCAA-A212-54F60CD0DA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D7E8A7-0B75-CCAA-A212-54F60CD0DA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D7E8A7-0B75-CCAA-A212-54F60CD0DA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{345939CA-8A01-4D24-9605-DAA0A54E7E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{345939CA-8A01-4D24-9605-DAA0A54E7E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{345939CA-8A01-4D24-9605-DAA0A54E7E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{345939CA-8A01-4D24-9605-DAA0A54E7E8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

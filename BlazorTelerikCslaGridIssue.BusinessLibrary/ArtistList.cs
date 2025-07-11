@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Csla;
 
-namespace BlazorTelerikCslaGridIssue.BusinessLibrary
+namespace BusinessLibrary
 {
   [Serializable]
   public class ArtistList : BusinessListBase<ArtistList, ArtistEdit>

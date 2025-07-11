@@ -10,4 +10,9 @@
     <PackageReference Include="Csla" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Art-Studio-DataModel\Art-Studio-DataModel.csproj" />
+    <ProjectReference Include="..\BlazorTelerikCslaGridIssue.FakeData\Art-Studio-FakeData.csproj" />
+  </ItemGroup>
+
 </Project>

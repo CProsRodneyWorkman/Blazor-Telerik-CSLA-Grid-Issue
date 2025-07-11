@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Csla;
 using Csla.Rules;
 
-namespace BlazorTelerikCslaGridIssue.BusinessLibrary
+namespace BusinessLibrary
 {
   [Serializable]
   public class ArtStudioEdit : BusinessBase<ArtStudioEdit>

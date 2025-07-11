@@ -2,9 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Csla;
 using Csla.Rules;
+using Art_Studio_FakeData;
+using Art_Studio_DataModel;
 
-
-namespace BlazorTelerikCslaGridIssue.BusinessLibrary
+namespace BusinessLibrary
 {
   [Serializable]
   public class ArtistEdit : BusinessBase<ArtistEdit>
@@ -104,18 +105,20 @@ namespace BlazorTelerikCslaGridIssue.BusinessLibrary
     [FetchChild]
     private void Fetch(int artistId)
     {
-      // Simulate fetch
-      ArtistId = artistId;
-      FullName = "Sample Artist";
-      ContactEmail = "artist@email.com";
-      PhoneNumber = "555-1234";
-      MembershipStatus = "Active";
-      MembershipType = "Full-time";
-      JoinDate = DateTime.Today.AddYears(-1);
-      EmergencyContactName = "Jane Doe";
-      EmergencyContactPhone = "555-5678";
-      PreferredMediums = "Painting, Sculpture";
-      Notes = "No allergies.";
+      // Use ArtistFaker to generate a fake artist
+      var faker = new ArtistFaker();
+      var artist = faker.GenerateArtists(1).First();
+      ArtistId = artist.ArtistId;
+      FullName = artist.FullName;
+      ContactEmail = artist.ContactEmail;
+      PhoneNumber = artist.PhoneNumber;
+      MembershipStatus = artist.MembershipStatus;
+      MembershipType = artist.MembershipType;
+      JoinDate = artist.JoinDate;
+      EmergencyContactName = artist.EmergencyContactName;
+      EmergencyContactPhone = artist.EmergencyContactPhone;
+      PreferredMediums = artist.PreferredMediums;
+      Notes = artist.Notes;
     }
 
     [InsertChild]
