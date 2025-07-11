@@ -92,17 +92,18 @@ namespace BusinessLibrary
     protected override void AddBusinessRules()
     {
       base.AddBusinessRules();
-      // Add custom business rules if needed
+          // Add custom business rules if needed
+          BusinessRules.AddRule(new ArtistEditRules.ValidatePhoneNumberRule(PhoneNumberProperty));
     }
 
-    [CreateChild]
+    [Create,CreateChild]
     private void Create()
     {
       // Default values
       JoinDate = DateTime.Today;
     }
 
-    [FetchChild]
+    [Fetch,FetchChild]
     private void Fetch(int artistId)
     {
       // Use ArtistFaker to generate a fake artist
