@@ -13,7 +13,7 @@
 
 @if (artStudioEditModel?.Model != null)
 {
-    <EditForm Model="artStudioEditModel.Model">
+    <EditForm Model="artStudioEditModel.Model" FormName="studioForm" OnValidSubmit="PreventSubmit">
         <div class="mb-3">
             <label>Studio ID</label>
             <InputNumber @bind-Value="artStudioEditModel.Model.StudioId" class="form-control" />
@@ -34,7 +34,47 @@
             <label>Equipment</label>
             <InputText @bind-Value="artStudioEditModel.Model.Equipment" class="form-control" />
         </div>
-        <!-- ArtistList is not shown as an edit field here -->
+        <!-- ArtistList Grid here -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Join Date</th>
+                    <th>Emergency Contact</th>
+                    <th>Emergency Phone</th>
+                    <th>Mediums</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var artist in artStudioEditModel.Model.ArtistList)
+                {
+                    <tr>
+                        <td>@artist.ArtistId</td>
+                        <td>@artist.FullName</td>
+                        <td>@artist.ContactEmail</td>
+                        <td>@artist.PhoneNumber</td>
+                        <td>@artist.MembershipStatus</td>
+                        <td>@artist.MembershipType</td>
+                        <td>@artist.JoinDate.ToShortDateString()</td>
+                        <td>@artist.EmergencyContactName</td>
+                        <td>@artist.EmergencyContactPhone</td>
+                        <td>@artist.PreferredMediums</td>
+                        <td>@artist.Notes</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" @onclick="() => EditArtist(artist)">Edit</button>
+                            <button class="btn btn-sm btn-danger" @onclick="() => DeleteArtist(artist)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </EditForm>
 }
 else if (!string.IsNullOrWhiteSpace(ErrorMessage))
@@ -46,18 +86,77 @@ else
     <p>Loading...</p>
 }
 
-@code {
+@if (editArtist != null)
+{
+    <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Artist</h5>
+                    <button type="button" class="btn-close" @onclick="CancelEdit"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="editArtist" FormName="artistForm" OnValidSubmit="PreventSubmit">
+                        <div class="mb-3">
+                            <label>Name</label>
+                            <InputText @bind-Value="editArtist.FullName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <InputText @bind-Value="editArtist.ContactEmail" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <InputText @bind-Value="editArtist.PhoneNumber" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Status</label>
+                            <InputText @bind-Value="editArtist.MembershipStatus" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Type</label>
+                            <InputText @bind-Value="editArtist.MembershipType" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Join Date</label>
+                            <InputDate @bind-Value="editArtist.JoinDate" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Emergency Contact</label>
+                            <InputText @bind-Value="editArtist.EmergencyContactName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Emergency Phone</label>
+                            <InputText @bind-Value="editArtist.EmergencyContactPhone" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Mediums</label>
+                            <InputText @bind-Value="editArtist.PreferredMediums" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label>Notes</label>
+                            <InputText @bind-Value="editArtist.Notes" class="form-control" />
+                        </div>
+                    </EditForm>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" @onclick="() => SaveArtist(editArtist)">Save</button>
+                    <button class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
+@code {
     private string ErrorMessage { get; set; } = string.Empty;
+    private ArtistEdit? editArtist;
 
     protected override async Task OnInitializedAsync()
     {
-        // Every page _must_ initialize the state manager
         await StateManager.InitializeAsync();
-
         artStudioEditModel.Saved += () => NavigationManager.NavigateTo("projects");
         artStudioEditModel.ModelPropertyChanged += async (s, e) => await InvokeAsync(() => StateHasChanged());
-
         await artStudioEditModel.RefreshAsync(() => artStudioEditPortal.FetchAsync()).ContinueWith(_ =>
         {
             if (artStudioEditModel.Exception != null)
@@ -68,9 +167,29 @@ else
             {
                 ErrorMessage = string.Empty;
             }
-            // Handle any post-refresh logic here
             InvokeAsync(() => StateHasChanged());
         });
-
     }
+
+    private void EditArtist(ArtistEdit artist)
+    {
+        editArtist = artist;
+    }
+
+    private void SaveArtist(ArtistEdit artist)
+    {
+        editArtist = null;
+    }
+
+    private void CancelEdit()
+    {
+        editArtist = null;
+    }
+
+    private void DeleteArtist(ArtistEdit artist)
+    {
+        artStudioEditModel.Model.ArtistList.Remove(artist.ArtistId);
+    }
+
+    private void PreventSubmit() { /* no-op to prevent form submission */ }
 }
